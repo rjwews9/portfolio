@@ -9,7 +9,7 @@ const files = new Map([
     ['/style.css', ['style.css', 'text/css; charset=utf-8']],
     ['/chat.js', ['chat.js', 'text/javascript; charset=utf-8']],
     ['/site.js', ['site.js', 'text/javascript; charset=utf-8']],
-    ['/pic.jpg', ['pic.jpg', 'image/jpeg']],
+    ['/rjid.png', ['rjid.png', 'image/png']],
     ['/cat.svg', ['cat.svg', 'image/svg+xml']]
 ]);
 
