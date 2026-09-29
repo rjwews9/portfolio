@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet Rj Genosolanggo, an Information Technology student at Davao del Sur State College. Explore his projects, skills, and interests.">
+    <meta name="theme-color" content="#F2EADD">
+    <title>Rj Genosolanggo | Portfolio</title>
+    <link rel="icon" href="cat.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="site.js" defer></script>
+    <script src="chat.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Reusable, local decorative illustrations. No external image requests. -->
+    <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="editorial-mark" viewBox="0 0 80 80">
+                <g fill="none" stroke="currentColor" stroke-width="3"><path d="M40 6v68M6 40h68M16 16l48 48M16 64l48-48"/></g>
+            </symbol>
+            <symbol id="running-cat" viewBox="0 0 180 110">
+                <g class="cat-gait" fill="var(--cat-fill, #625D54)" stroke="var(--cat-outline, #191917)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="cat-tail" d="M47 57C22 62 12 44 19 27" fill="none" stroke="var(--cat-fill, #625D54)" stroke-width="9"/>
+                    <g class="cat-leg leg-rear-far"><path d="M59 63v18h8V63Z"/><path class="cat-shin" d="M59 80v17h15q3-6-7-7V80Z"/></g>
+                    <g class="cat-leg leg-front-far"><path d="M103 63v18h8V63Z"/><path class="cat-shin" d="M103 80v17h15q3-6-7-7V80Z"/></g>
+                    <path d="M40 57c1-14 19-23 43-18l30 7 5 22c-15 10-45 12-64 5q-14-4-14-16Z"/>
+                    <g class="cat-leg leg-rear"><path d="M51 63v18h9V63Z"/><path class="cat-shin" d="M51 80v17h16q3-6-7-7V80Z"/></g>
+                    <g class="cat-leg leg-front"><path d="M95 63v18h9V63Z"/><path class="cat-shin" d="M95 80v17h16q3-6-7-7V80Z"/></g>
+                    <path d="m104 39 1-22 15 10q9-1 16 3l15-11-1 28q-1 18-22 18c-16-1-27-9-24-26Z"/>
+                    <path d="m111 26 1 9 7-4m18 5 7-7-1 13" fill="#D1C4AC" stroke="none"/>
+                    <g class="cat-eyes" stroke="#F2EADD"><path d="m119 43 3 1m17 1 3-1"/></g>
+                    <path d="m129 49 3 2 3-2m-3 2v3m0 0q-4 3-6 0m6 0q4 3 6 0" fill="none" stroke="#F2EADD" stroke-width="1.5"/>
+                    <path d="m111 48-9-1m9 6-9 2m43-5 10-1m-11 7 10 2" fill="none" stroke-width="1.5"/>
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="ambient-background" aria-hidden="true">
+        <div class="ambient-shape shape-one" data-parallax="0.045"></div>
+        <div class="ambient-shape shape-two" data-parallax="-0.035"></div>
+        <div class="ambient-shape shape-three" data-parallax="0.025"></div>
+    </div>
+
+    <!-- The photo link remains usable even without JavaScript. -->
+    <div class="avatar-overlay" id="avatar-view" role="dialog" aria-modal="true" aria-label="Expanded portrait of Rj Genosolanggo" tabindex="-1">
+        <a href="#home" class="avatar-backdrop" aria-label="Close expanded photo" tabindex="-1"></a>
+        <figure class="avatar-modal">
+            <img src="pic.jpg" alt="Expanded portrait photo of Rj Genosolanggo" width="480" height="560">
+            <figcaption>Rj Genosolanggo <a href="#home" class="avatar-close" aria-label="Close expanded photo">Close <span aria-hidden="true">×</span></a></figcaption>
+        </figure>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="brand" href="#home" aria-label="Rj Genosolanggo — home">
+                    <span class="brand-monogram">rj.</span><span class="brand-name">Genosolanggo<small>Personal portfolio</small></span>
+                </a>
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu <span aria-hidden="true">☰</span></button>
+                <nav id="main-navigation" class="main-nav" aria-label="Main navigation">
+                    <a href="#home" aria-current="location">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#education">Education</a>
+                    <a href="#social">Social</a>
+                    <a href="#contact" class="nav-contact">Let’s connect <span aria-hidden="true">↗</span></a>
+                </nav>
+                <label class="theme-switch" title="Toggle dark mode">
+                    <input type="checkbox" id="theme-toggle" aria-label="Dark mode">
+                    <span class="theme-icon" aria-hidden="true">☾</span>
+                </label>
+            </div>
+        </header>
+
+        <main id="main" class="main-content" tabindex="-1">
+            <section class="hero-section page-section" id="home" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Portfolio / Information Technology</p>
+                    <p class="hero-greeting">Hello, I’m</p>
+                    <h1 id="hero-title">Rj<br><span class="hero-surname">Genosolanggo.</span></h1>
+                    <p class="hero-sub">IT student. Curious mind. Always growing.</p>
+                    <p class="hero-desc">Exploring web development, software systems, and the small projects that help me learn along the way.</p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn-primary">View projects <span aria-hidden="true">↗</span></a>
+                        <a href="#contact" class="btn-secondary">Contact me <span aria-hidden="true">→</span></a>
+                    </div>
+                    <p class="hero-location"><span aria-hidden="true">↳</span> Digos City, Davao del Sur, Philippines</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-decoration" aria-hidden="true"><div class="hero-depth" data-parallax="-0.045" data-parallax-hero><div class="hero-cursor"><div class="portrait-orbit"></div><svg class="hero-mark" width="86" height="86"><use href="#editorial-mark"/></svg></div></div></div>
+                    <div class="portrait-card">
+                        <a href="#avatar-view" class="profile-avatar-container" aria-label="View expanded profile photo">
+                            <div class="portrait-image-shift" data-parallax="0.05" data-parallax-limit="22" data-parallax-hero><img src="pic.jpg" alt="Portrait of Rj Genosolanggo" class="profile-avatar" width="420" height="480" fetchpriority="high"></div>
+                            <span class="portrait-expand" aria-hidden="true">↗</span>
+                        </a>
+                        <div class="portrait-caption"><span>@rjgenosolanggo</span><span>01 / Portrait</span></div>
+                    </div>
+                    <p class="study-note"><span aria-hidden="true">↗</span> Learning &amp; growing, one project at a time.</p>
+                </div>
+                <div class="hero-bottom"><a href="#about" class="scroll-cue"><span aria-hidden="true">↓</span> Scroll to explore</a><span class="hero-index">Code. Create. Keep learning.</span><button type="button" id="motion-toggle" class="motion-toggle" aria-pressed="false" hidden>Pause animations</button></div>
+            </section>
+
+            <div class="cat-lane lane-one" aria-hidden="true">
+                <span class="lane-caption">A little movement in the margins.</span>
+                <div class="cat-runner cat-one"><svg class="cat-body" viewBox="0 0 180 110" focusable="false"><use href="#running-cat"/></svg></div>
+                <div class="ground-line"></div>
+            </div>
+
+            <section class="page-section" id="about" aria-labelledby="about-title" data-reveal>
+                <div class="section-heading"><div><p class="eyebrow">01 / The person behind the projects</p><h2 id="about-title">About me.</h2></div><span class="section-marker" aria-hidden="true">(01)</span></div>
+                <div class="about-grid">
+                    <article class="bento-card about-story">
+                        <span class="card-kicker">Hello, nice to meet you!</span>
+                        <h3>Curiosity is where it starts.</h3>
+                        <p class="about-text">My name is <strong>Rj Genosolanggo</strong>. I am an Information Technology student at <strong>Davao del Sur State College</strong>.</p>
+                        <p class="about-text about-text-gap">I like exploring programming, web development, software systems, building PCs, video editing, and playing video games in my free time. I'm constantly working on simple projects to sharpen my practical IT skills while enjoying the process along the way.</p>
+                    </article>
+                    <article class="bento-card interests-card">
+                        <span class="card-kicker">What I enjoy doing</span>
+                        <h3>A mix of code<br>and creativity.</h3>
+                        <ul class="services-list"><li><span aria-hidden="true">↗</span> Web Development</li><li><span aria-hidden="true">✳</span> Video Editing</li></ul>
+                        <p class="small-note">And a little gaming in between.</p>
+                        <svg class="interest-mark" width="64" height="64" aria-hidden="true"><use href="#editorial-mark"/></svg>
+                    </article>
+                </div>
+            </section>
+
+            <section class="page-section" id="skills" aria-labelledby="skills-title" data-reveal>
+                <div class="section-heading"><div><p class="eyebrow">02 / My growing toolkit</p><h2 id="skills-title">Skills &amp; tools.</h2></div><p class="heading-note">A few tools &amp; interests<br>that keep me exploring.</p></div>
+                <div class="skills-panel bento-card">
+                    <h3 class="strip-label">Tools &amp; Tech</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">&lt;/&gt;</span>HTML</span>
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">{ }</span>CSS</span>
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">php</span>PHP</span>
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">▤</span>MySQL</span>
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">♨</span>Java</span>
+                        <span class="tech-tag"><span class="tool-icon" aria-hidden="true">⌘</span>VS Code</span>
+                    </div>
+                    <div class="skill-interests"><h3>Skills &amp; interests</h3><div class="interest-tags"><span class="pill-tag">Web Development</span><span class="pill-tag">Database Management</span><span class="pill-tag">Video Editing</span></div></div>
+                </div>
+            </section>
+
+            <section class="page-section" id="projects" aria-labelledby="projects-title">
+                <div class="section-heading" data-reveal><div><p class="eyebrow">03 / Learning by doing</p><h2 id="projects-title">Selected projects.</h2></div><a href="https://github.com/rjwews9" target="_blank" rel="noopener noreferrer" class="text-link">My GitHub <span aria-hidden="true">↗</span></a></div>
+                <p class="section-subtitle">Systems and web applications I have worked on or studied.</p>
+                <div class="projects-grid">
+                    <div class="project-reveal" data-reveal>
+                    <article class="project-card" data-tilt>
+                        <span class="card-highlight" aria-hidden="true"></span>
+                        <div class="project-art gym-art" aria-hidden="true">
+                            <div class="mini-window"><div class="window-top"><i></i><i></i><i></i><span>membership</span></div><div class="gym-preview"><div class="dumbbell"><span></span><b></b><span></span></div><div class="preview-lines"><i></i><i></i><i></i></div></div></div>
+                            <span class="art-label">Desktop system · Illustration</span><span class="art-spark">↗</span>
+                        </div>
+                        <div class="project-item"><span class="project-number">PROJECT / 01</span><h3>Gym Membership System</h3><p>A desktop system designed to manage and track memberships in a fitness gym efficiently.</p><div class="tech-used"><span>Java</span><span>MySQL</span></div><p class="project-pending">Repository / demo link to be added.</p></div>
+                    </article>
+                    </div>
+                    <div class="project-reveal" data-reveal style="--enter-delay: 110ms">
+                    <article class="project-card" data-tilt>
+                        <span class="card-highlight" aria-hidden="true"></span>
+                        <div class="project-art web-art" aria-hidden="true">
+                            <div class="mini-window portfolio-preview"><div class="window-top"><i></i><i></i><i></i><span>my little space</span></div><div class="web-preview"><div><span class="preview-hello">Hello, world.</span><div class="preview-lines"><i></i><i></i></div><span class="preview-button"></span></div><svg width="66" height="66"><use href="#editorial-mark"/></svg></div></div>
+                            <span class="art-label">Personal website · Illustration</span><span class="art-spark">↗</span>
+                        </div>
+                        <div class="project-item"><span class="project-number">PROJECT / 02</span><h3>Personal Web Portfolio</h3><p>A modern responsive portfolio site built to display skills, education, and contact options.</p><div class="tech-used"><span>HTML</span><span>CSS</span></div><a href="#home" class="text-link project-link">You’re here — explore the site <span aria-hidden="true">↗</span></a></div>
+                    </article>
+                    </div>
+                </div>
+            </section>
+
+            <div class="cat-lane lane-two" aria-hidden="true">
+                <div class="cat-runner cat-two"><svg class="cat-body" viewBox="0 0 180 110" focusable="false"><use href="#running-cat"/></svg></div>
+                <div class="cat-runner cat-three"><svg class="cat-body" viewBox="0 0 180 110" focusable="false"><use href="#running-cat"/></svg></div>
+                <div class="ground-line"></div>
+            </div>
+
+            <section class="page-section education-section" id="education" aria-labelledby="education-title" data-reveal>
+                <div class="section-heading"><div><p class="eyebrow">04 / Still growing</p><h2 id="education-title">Education.</h2></div><span class="section-marker" aria-hidden="true">(04)</span></div>
+                <article class="bento-card education-card"><div class="education-icon" aria-hidden="true">↗</div><div class="edu-details"><span class="edu-status">Currently studying</span><h3 class="edu-program">Bachelor of Science in Information Technology</h3><p class="edu-school">Davao del Sur State College</p><p class="edu-location">Davao del Sur, Philippines</p></div><svg class="education-mark" width="64" height="64" aria-hidden="true"><use href="#editorial-mark"/></svg></article>
+            </section>
+
+            <section class="page-section social-section" id="social" aria-labelledby="social-title" data-reveal>
+                <div><p class="eyebrow">Around the internet</p><h2 id="social-title">Find me online.</h2><p>Where else you can catch me online.</p></div>
+                <div class="social-section-links"><a href="https://www.facebook.com/rjwews9/" target="_blank" rel="noopener noreferrer">Facebook <span aria-hidden="true">↗</span></a><a href="https://github.com/rjwews9" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="#contact">Contact <span aria-hidden="true">↗</span></a></div>
+            </section>
+
+            <section class="page-section contact-section" id="contact" aria-labelledby="contact-title" data-reveal>
+                <div class="contact-intro"><p class="eyebrow">05 / Say hello</p><h2 id="contact-title">Let’s start a conversation.</h2><p>If you would like to reach out, I’d be happy to hear from you.</p><a href="https://www.facebook.com/rjwews9/" target="_blank" rel="noopener noreferrer" class="btn-primary">Find me on Facebook <span aria-hidden="true">↗</span></a><span class="contact-arrow" aria-hidden="true">↗</span></div>
+                <div class="bento-card contact-card">
+                    <h3>Leave a little hello.</h3>
+                    <p class="form-notice" id="contact-notice"><strong>Form preview</strong> — message delivery isn’t connected yet. Please use my Facebook link to reach me.</p>
+                    <!-- Update: connect a real form service before enabling submission. -->
+                    <form class="contact-form" action="#contact" method="post" aria-describedby="contact-notice">
+                        <div class="form-row"><div class="form-group"><label for="name">Full name</label><input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required></div><div class="form-group"><label for="email">Email address</label><input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required></div></div>
+                        <div class="form-group"><label for="subject">Subject <span>(optional)</span></label><input type="text" id="subject" name="subject" placeholder="What’s on your mind?"></div>
+                        <div class="form-group"><label for="message">Your message</label><textarea id="message" name="message" rows="4" placeholder="Hi RJ…" required></textarea></div>
+                        <button type="submit" class="btn-primary" disabled>Send message <span aria-hidden="true">↗</span></button>
+                        <span class="form-footnote">To update: connect a message delivery service.</span>
+                    </form>
+                </div>
+            </section>
+
+            <footer class="site-footer"><div><a href="#home" class="footer-brand" aria-label="RJ — back to home">rj.</a><p>&copy; 2026 Rj Genosolanggo<br>Digos City, Davao del Sur, Philippines.</p></div><p class="footer-note">A little curiosity. A little creativity.<br>Always a work in progress.</p><a href="#home" class="back-to-top">Back to top <span aria-hidden="true">↑</span></a></footer>
+        </main>
+    </div>
+
+    <aside class="portfolio-chat" aria-label="Portfolio assistant" hidden>
+        <section id="chat-panel" class="chat-panel" role="region" aria-labelledby="chat-title" hidden>
+            <header class="chat-header"><img src="cat.svg" class="chat-cat-logo" alt="" width="40" height="40"><div class="chat-heading"><h2 id="chat-title">RJ’s assistant</h2><p id="chat-mode">Portfolio Q&amp;A</p></div><button type="button" id="chat-close" aria-label="Close chat">×</button></header>
+            <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-relevant="additions" tabindex="0" aria-label="Conversation"></div>
+            <div class="chat-suggestions" aria-label="Suggested questions"><button type="button">Who is RJ?</button><button type="button">What are his skills?</button><button type="button">Tell me about his projects</button></div>
+            <p id="chat-status" class="chat-status" role="status"></p>
+            <form id="chat-form" class="chat-form"><label for="chat-input">Ask about RJ</label><div class="chat-input-row"><input id="chat-input" name="question" type="text" placeholder="Ask me something…" maxlength="1000" autocomplete="off" required><button type="submit" aria-label="Send question">↑</button></div></form>
+            <p class="chat-note">Based on this portfolio. AI can make mistakes.</p>
+        </section>
+        <button type="button" id="chat-toggle" class="chat-toggle" aria-expanded="false" aria-controls="chat-panel"><img src="cat.svg" class="chat-cat-logo" alt="" width="32" height="32"><span>Ask about RJ</span><span class="chat-online" aria-hidden="true"></span></button>
+    </aside>
+</body>
+</html>

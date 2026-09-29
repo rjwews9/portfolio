@@ -1,0 +1,9 @@
+{
+  "name": "rj-portfolio",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check chat.js && node --check site.js"
+  },
+  "engines": { "node": ">=20" }
+}
