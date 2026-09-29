@@ -19,6 +19,8 @@
     --button-hover: #39362F;
     --shadow: 0 12px 30px rgb(25 25 23 / 6%);
     --highlight: rgb(255 252 244 / 32%);
+    --success: #3F6B45;
+    --danger: #8A3B2F;
     --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-heading: var(--font-body);
     --type-body: 1.0625rem;
@@ -57,6 +59,8 @@ body:has(#theme-toggle:checked) {
     --button-hover: #F2EADD;
     --shadow: 0 12px 30px rgb(0 0 0 / 12%);
     --highlight: rgb(242 234 221 / 9%);
+    --success: #9FC3A2;
+    --danger: #E5A48F;
 }
 
 /* 02. BASE & SHARED ELEMENTS */
@@ -229,7 +233,11 @@ img, svg { display: block; max-width: 100%; }
 .form-group label { font-size: 0.8125rem; font-weight: 600; }.form-group label span { font-weight: 400; color: var(--muted); }
 .form-group input, .form-group textarea { width: 100%; border: 1px solid var(--control-border); border-radius: 4px; padding: 12px 14px; background: var(--bg); color: var(--ink); font-size: 1rem; min-width: 0; }.form-group textarea { resize: vertical; min-height: 130px; }
 input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; font-size: 0.875rem; }
-.contact-form .btn-primary { width: 100%; }.form-footnote { font-size: 0.75rem; color: var(--muted); text-align: center; }
+.contact-form .btn-primary { width: 100%; }
+.form-status { min-height: 1.4em; font-size: 0.875rem; color: var(--muted); margin-top: -4px; }
+.form-status.is-success { color: var(--success); font-weight: 600; }
+.form-status.is-error { color: var(--danger); font-weight: 600; }
+.form-footnote { font-size: 0.75rem; color: var(--muted); text-align: center; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 32px; border-top: 1px solid var(--border); padding: 38px 0 120px; }.site-footer > div { display: flex; align-items: center; gap: 24px; }
 .footer-brand { font-size: 3.5rem; font-weight: 800; line-height: 1; letter-spacing: -0.075em; text-transform: uppercase; text-decoration: none; }.site-footer p { font-size: 0.75rem; color: var(--muted); }.back-to-top { font-size: 0.8125rem; white-space: nowrap; text-decoration: none; }.back-to-top span { margin-left: 15px; }
 

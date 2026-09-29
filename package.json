@@ -5,5 +5,10 @@
     "start": "node server.mjs",
     "check": "node --check server.mjs && node --check chat.js && node --check site.js"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "nodemailer": "^10.0.12"
+  }
 }

@@ -68,7 +68,75 @@
     document.addEventListener('click', event => {
         if (smallScreen.matches && !header.contains(event.target)) setMenu(false);
     }, { signal });
-    document.querySelector('.contact-form').addEventListener('submit', event => event.preventDefault(), { signal });
+    /* Contact form: server-side email delivery. Gracefully stays disabled
+       when the server has no email service configured. */
+    const contactForm = document.querySelector('.contact-form');
+    const contactSubmit = contactForm.querySelector('button[type="submit"]');
+    const contactNotice = document.querySelector('#contact-notice');
+    const contactStatus = document.querySelector('#contact-status');
+    const contactFootnote = document.querySelector('#contact-footnote');
+    let contactConfigured = false;
+    let contactSending = false;
+
+    function showContactState(configured) {
+        contactConfigured = configured;
+        contactSubmit.disabled = !configured;
+        contactNotice.innerHTML = configured
+            ? '<strong>Contact form</strong> — send a message and it goes straight to my inbox. Your address is only used to reply.'
+            : '<strong>Contact form</strong> — email delivery isn’t configured on this server yet. Please use my Facebook link to reach me.';
+        contactFootnote.textContent = configured
+            ? 'Delivered securely from this server.'
+            : 'Requires the site’s email service to be configured.';
+    }
+    function setContactStatus(text, state) {
+        contactStatus.textContent = text;
+        contactStatus.className = `form-status${state ? ` is-${state}` : ''}`;
+    }
+    const contactErrorText = code => ({
+        not_configured: 'Email delivery isn’t set up on this server yet — please use my Facebook link instead.',
+        rate_limited: 'Too many messages just now. Please wait a few minutes and try again.',
+        invalid: 'Please check every field and try again.',
+        send_failed: 'The message couldn’t be sent. Please try again or use my Facebook link.'
+    }[code] || 'The message couldn’t be sent. Please try again or use my Facebook link.');
+
+    async function checkContactAvailability() {
+        if (!/^https?:$/.test(location.protocol)) return;
+        try {
+            const response = await fetch('/api/contact/status', { signal, cache: 'no-store' });
+            if (!response.ok) throw new Error('unavailable');
+            const data = await response.json();
+            if (typeof data.configured === 'boolean') showContactState(data.configured);
+        } catch { showContactState(false); }
+    }
+    contactForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (contactSending || !contactConfigured || !contactForm.reportValidity()) return;
+        contactSending = true;
+        contactSubmit.disabled = true;
+        setContactStatus('Sending your message…', '');
+        const payload = Object.fromEntries(new FormData(contactForm).entries());
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                signal: AbortSignal.timeout(30000)
+            });
+            const data = await response.json().catch(() => ({}));
+            if (response.ok) {
+                contactForm.reset();
+                setContactStatus('Message sent — thank you for reaching out!', 'success');
+            } else {
+                setContactStatus(contactErrorText(data.error), 'error');
+            }
+        } catch {
+            setContactStatus(contactErrorText('send_failed'), 'error');
+        } finally {
+            contactSending = false;
+            contactSubmit.disabled = !contactConfigured;
+        }
+    }, { signal });
+    checkContactAvailability();
 
     /* One scheduled frame handles scroll and eased pointer updates. No idle loop. */
     function scheduleFrame() {

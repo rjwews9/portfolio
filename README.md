@@ -1,45 +1,76 @@
 # RJ's portfolio
 
-Responsive, matcha-themed portfolio built with plain HTML, CSS, and JavaScript. The floating **Ask about RJ** cat assistant answers questions about the portfolio and matches its light/dark theme. There is no framework, bundler, or production dependency to install.
+A warm-neutral, editorial portfolio built with plain HTML, CSS, and JavaScript — no framework or bundler. It includes a floating **Ask about RJ** cat assistant, decorative parallax and running cats, a dark mode, and a contact form that can email your inbox. Dependencies: only `nodemailer` (email delivery).
 
-## Design & customization
+## Quick start
 
-- **Colors:** `style.css`, section **01. Design tokens**. Change `--cream`, `--sage`, `--matcha`, `--green`, and `--pink`. The `body:has(#theme-toggle:checked)` block sets the dark palette. Text, borders, and surfaces use semantic variables to preserve readable contrast.
-- **Fonts & layout:** the Google Fonts link in `index.html` loads DM Sans and Lora, with local system fallbacks. `--font-body`, `--font-display`, and `--radius` are in `style.css`. Responsive rules are in section **13** (1100px, 850px, and 600px breakpoints).
-- **Parallax strength:** `PARALLAX_INTENSITY` in `site.js` scales the effect. Set it to `0` to disable depth. The three `.ambient-shape` elements in `index.html` have individual `data-parallax` speeds. Movement is capped at 100px, reduced on tablets, and disabled on mobile. Important content does not move with parallax.
-- **Cats:** the three `.cat-walker` elements in `index.html` reuse the inline `#walking-cat` SVG. Remove a walker to reduce the count, or duplicate one with its own class for another cat. `--cat-one-speed`, `--cat-two-speed`, and `--cat-three-speed` in `style.css` control desktop cycle duration (larger values mean slower movement). Section **09** controls colors, start delays, walking, blinking, tail sway, and bobbing. Section **13** sets slower tablet/mobile durations; only the first cat is shown on mobile. Keep cats inside `.cat-lane` so they cannot obscure content.
-- **Assistant logo:** `cat.svg` is the local pastel cat icon used in the chat panel, launcher, and browser favicon.
-- **Motion & accessibility:** the “Pause motion” control pauses decorative motion. `prefers-reduced-motion` disables parallax, entrances, walking, blinking, and smooth scrolling automatically. `site.js` batches scroll work with `requestAnimationFrame`, uses `IntersectionObserver` for entrances, and suspends/cleans up work when the page is left. Navigation and content remain usable without JavaScript.
+```powershell
+npm install     # once — installs nodemailer
+npm start       # http://localhost:3000
+npm run check   # syntax check for server.mjs, chat.js, site.js
+```
 
-## Content and unfinished integrations
+Requires Node.js 20 or newer.
 
-Edit the portfolio in `index.html`. Existing name, photo, education, skills, project descriptions, location, and social URLs are retained. Preserve section IDs and the `.about-text`, `.project-item`, `.tech-tags`, `.interest-tags`, `.edu-details`, and `.services-list` hooks used by the basic chatbot. The `.dashboard-container` wrapper is also used by the AI server to read portfolio content.
+## Enable the contact form (Gmail)
 
-- **Contact form:** the original form had no delivery endpoint. Its labeled fields are retained as an explicitly marked preview with a disabled send button. Facebook is the working contact option; no email address was supplied. To enable delivery, connect a real form service, configure its action/method, remove the submit prevention in `site.js`, enable the submit button, update the notice, and test delivery. Update the chatbot's contact instructions if you add a working form or email.
-- **Project links:** no Gym Membership System repository/demo URL was supplied. Its card clearly marks that link as missing. Add the real URL when available. The portfolio card links to the current site, and the GitHub link points to the existing profile. Project artwork is labeled as illustration, not a screenshot.
+The form delivers messages to **your Gmail inbox**. Gmail does not allow your normal account password for SMTP, so create a one-time **App Password**:
 
-The existing Node server only gained a static route for `site.js`; its AI endpoint is unchanged.
+1. Turn on **2-Step Verification** for your Google account: https://myaccount.google.com/security
+2. Create an App Password (search “App passwords” in Google Account settings, or open https://myaccount.google.com/apppasswords). Pick “Mail” or “Other” and copy the 16-character password.
+3. Put both values in a `.env` file in this folder (already git-ignored), or set them as environment variables:
 
-## Enable AI answers
+```dotenv
+SMTP_USER=your-account@gmail.com
+SMTP_PASS=your-16-character-app-password
+```
 
-Install Node.js 20 or newer. No npm dependencies are needed. In PowerShell, from this folder:
+4. Run `npm start`.
+
+Notes:
+
+- Messages are delivered to `SMTP_USER` by default. Set `CONTACT_TO=someone@example.com` to send somewhere else.
+- Optional overrides: `SMTP_HOST` (default `smtp.gmail.com`) and `SMTP_PORT` (default `465`).
+- The password stays on the server: it is never sent to the browser, logged, or committed. `.env` is ignored by git.
+- Without SMTP settings the form shows an honest “not configured yet” notice and keeps its send button disabled; Facebook remains the working contact option.
+- Submissions are validated server-side (name, email, message; newlines stripped from headers) and rate-limited to 5 attempts per 10 minutes per IP address.
+- Your email address is never printed in the page — visitors only ever see the form.
+
+## Enable AI answers (optional)
 
 ```powershell
 $env:OPENAI_API_KEY = "your-api-key"
 npm start
 ```
 
-Open **http://localhost:3000**. The API key stays on the server. API usage is billed by your provider. Optionally set `OPENAI_MODEL` (default: `gpt-4.1-mini`) or `PORT` (default: `3000`) in the server environment. Environment variables must be set explicitly; this server does not load `.env` files automatically.
+Or add `OPENAI_API_KEY=...` to `.env`. The key stays on the server and usage is billed by your provider. Optional: `OPENAI_MODEL` (default `gpt-4.1-mini`), `PORT` (default `3000`).
 
-The server reads the current `index.html` for each question, so updating the portfolio also updates the AI's source information. It includes recent conversation turns for follow-up questions and instructs the model to acknowledge missing information. Questions and recent replies are sent to OpenAI in AI mode. Conversations are held only in browser memory and reset on reload; this application does not save them.
+The server reads `index.html` for each question, so portfolio edits update the assistant automatically, including whether the contact form is configured. Questions and recent replies are sent to OpenAI in AI mode; conversations live only in browser memory.
 
-## Basic mode
+## Design & customization
 
-Opening `index.html` directly, hosting only the static files, or running without an API key uses a local keyword-based portfolio lookup. This is labeled **Basic mode**, not generative AI. It supports common questions about skills, projects, education, interests, location, and social links. If the AI request fails, the panel automatically uses this mode.
+- **Colors:** `style.css`, section **01. TOKENS** — `--cream` (background), `--beige`, `--sand`, `--charcoal` (text/buttons), `--warm-gray` (secondary text), `--border`. The `body:has(#theme-toggle:checked)` block is the dark palette. `--success` / `--danger` color the form status messages.
+- **Typography:** the `--font-body` stack (`"Helvetica Neue", Helvetica, Arial, sans-serif`) is used everywhere; there are no web-font imports. Sizes: `--type-body`, `--type-hero` (hero heading), `--type-surname`, `--type-section` (section headings), `--type-project`. Spacing: `--content-width`, `--gutter`, `--section-space`, `--card-space`.
+- **Parallax & cursor effects:** the `MOTION` object at the top of `site.js` — `parallaxStrength` (0 disables scroll depth), `heroCursorPx` (hero decoration movement), `cardTiltDegrees` (project card tilt), `pointerEasing` (how fast effects settle), `pointerHighlight` (pointer glow). Individual background speeds are `data-parallax` attributes in `index.html`; hero elements carry `data-parallax-hero` and are skipped when offscreen. Effects run only with a fine pointer/hover device and are batched into a single `requestAnimationFrame`.
+- **Cats:** three `.cat-runner` elements in `index.html` reuse the inline `#running-cat` SVG. Speeds: `--cat-one-speed`, `--cat-two-speed`, `--cat-three-speed` (larger = slower), `--cat-mobile-speed`, and `--cat-stride` (leg cycle) in `style.css`. Section **09** defines the running gait: body bound, upper leg, knee/shin, tail and blink animations. Remove a runner to reduce the count; `.cat-three` already hides below 850px and the second lane hides below 600px. Keep runners inside `.cat-lane` so they never cover content.
+- **Entrances:** `.is-entering` in `style.css` uses `--entrance-duration`, `--entrance-distance`, and per-element `--enter-delay` (project cards stagger via inline `--enter-delay` in `index.html`).
+- **Motion & accessibility:** “Pause animations” in the hero pauses parallax, entrances, cursor effects and cats. `prefers-reduced-motion` disables all of them and hides the control. Scroll/pointer work is `requestAnimationFrame`-drained, suspended in hidden tabs and offscreen lanes, and cleaned up with `AbortController` on pagehide. Content is never hidden until the entrance observer successfully starts, and navigation, form, and photo viewer work without JavaScript.
+
+## Content and unfinished integrations
+
+Edit the portfolio in `index.html`. Name, photo (`rjid.png`), education, skills, project descriptions, location, and social URLs are yours to update. Preserve section IDs and the `.about-text`, `.project-item`, `.tech-tags`, `.interest-tags`, `.edu-details`, and `.services-list` hooks used by the basic chatbot. The `.dashboard-container` wrapper is also used by the AI server to read portfolio content.
+
+- **Project links:** no Gym Membership System repository/demo URL was supplied, so its card says so. Add the real URL when available. The portfolio card links to this site; GitHub links point to `github.com/rjwews9`. Project artwork is labeled as illustration, not a screenshot.
+
+`server.mjs` serves the static files (`/rjid.png`, `/cat.svg`, …) plus `POST /api/chat`, `GET /api/contact/status`, and `POST /api/contact`.
+
+## Basic chatbot mode
+
+Opening `index.html` directly, hosting only static files, or running without an API key uses a local keyword-based lookup labeled **Basic mode**. It answers common questions about skills, projects, education, interests, location, and social links, and reflects whether the contact form is configured. If the AI request fails, the panel falls back to it automatically.
 
 ## Hosting
 
-For AI mode, deploy this folder on a Node.js-capable host with `npm start` as the start command and configure `OPENAI_API_KEY` as a server-side secret. Static-only hosts such as GitHub Pages support basic mode only. For a public AI deployment, configure request limits on your host or reverse proxy and spending limits with your API provider.
+Deploy on a Node.js host with `npm install && npm start` and configure `OPENAI_API_KEY` and `SMTP_USER`/`SMTP_PASS` as server-side secrets (never commit them). Static-only hosts such as GitHub Pages support the basic chatbot but no email delivery. For a public deployment, add rate limits at your host or reverse proxy and set spending limits with your providers.
 
 ## Checks
 
@@ -47,6 +78,4 @@ For AI mode, deploy this folder on a Node.js-capable host with `npm start` as th
 npm run check
 ```
 
-This checks all three JavaScript files. There is no build step for this static site.
-
-Redesign verification was run in Chromium at 320, 375, 600, 768, 850, 1024, 1440, and 1920px widths, covering overflow, navigation, contact preview, photo-viewer focus/Escape, chatbot basic-mode replies, dark mode, reduced motion, and no-JavaScript content. Automated axe WCAG A/AA checks passed for light/dark desktop, light mobile, and open mobile chat. Browser tooling was installed outside the project; it is not a production dependency. Real API replies require a configured key, and contact delivery remains unconfigured.
+There is no build step. This static site was verified in Chromium at 320, 375, 600, 768, 850, 1024, 1280, 1366, 1440, and 1920px for overflow, wrapping, navigation, contact delivery, photo-viewer focus/Escape, chatbot replies, dark mode, reduced motion, pause behavior, and no-JavaScript content. Automated axe WCAG A/AA checks passed for light/dark desktop, light mobile, and open mobile chat. Contact delivery was tested end-to-end against a local SMTP test server (validation, rate limiting, success and failure paths). Real Gmail delivery requires your App Password; live AI replies require an API key.

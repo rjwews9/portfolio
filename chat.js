@@ -9,6 +9,14 @@
     const mode = document.querySelector('#chat-mode');
     const history = [];
     let busy = false;
+    let contactReady = false;
+    // Mirror the server's delivery status so answers stay truthful.
+    if (/^https?:$/.test(location.protocol)) {
+        fetch('/api/contact/status', { cache: 'no-store' })
+            .then(response => response.ok ? response.json() : null)
+            .then(data => { contactReady = data?.configured === true; })
+            .catch(() => {});
+    }
 
     const text = (selector) => [...document.querySelectorAll(selector)]
         .map((element) => {
@@ -31,9 +39,11 @@
             return { answer: 'Hello! Ask me about RJ’s skills, projects, education, or interests.' };
         }
         if (/\b(contact|reach|social|facebook|github|email|hire|hiring|available|availability)\b/i.test(question)) {
-            return { answer: 'You can find RJ on Facebook and GitHub:\n' +
-                [...document.querySelectorAll('#social a[href^="https:"]')].map(a => `${a.textContent}: ${a.href}`).join('\n') +
-                '\nHis email address and work availability are not listed in this portfolio.', source: '#social' };
+            const links = [...document.querySelectorAll('#social a[href^="https:"]')].map(a => `${a.textContent}: ${a.href}`).join('\n');
+            const intro = contactReady
+                ? 'The fastest way is the contact form on this site — messages go straight to RJ’s inbox. You can also find him on Facebook and GitHub:\n'
+                : 'You can find RJ on Facebook and GitHub:\n';
+            return { answer: intro + links + '\nHis email address and work availability are not listed in this portfolio.', source: contactReady ? '#contact' : '#social' };
         }
         // Do not infer personal details that the portfolio does not provide.
         if (/\b(age|birthday|salary|phone|address|married|girlfriend|boyfriend|years|graduat|favorite)\w*\b/i.test(question)) {
