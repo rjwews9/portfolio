@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check chat.js && node --check site.js"
+    "check": "node --check server.mjs && node --check public/chat.js && node --check public/site.js"
   },
   "engines": {
     "node": ">=20"

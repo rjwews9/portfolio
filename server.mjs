@@ -15,16 +15,17 @@ if (existsSync(envFile)) {
     } catch { /* ignore unreadable .env */ }
 }
 
-const root = new URL('./', import.meta.url);
 const port = Number(process.env.PORT || 3000);
+// Static assets live in public/, which Vercel serves straight from its CDN.
+// Locally this map is what serves them; API routes always take priority.
 const files = new Map([
-    ['/', ['index.html', 'text/html; charset=utf-8']],
-    ['/index.html', ['index.html', 'text/html; charset=utf-8']],
-    ['/style.css', ['style.css', 'text/css; charset=utf-8']],
-    ['/chat.js', ['chat.js', 'text/javascript; charset=utf-8']],
-    ['/site.js', ['site.js', 'text/javascript; charset=utf-8']],
-    ['/rjid.png', ['rjid.png', 'image/png']],
-    ['/cat.svg', ['cat.svg', 'image/svg+xml']]
+    ['/', [new URL('./public/index.html', import.meta.url), 'text/html; charset=utf-8']],
+    ['/index.html', [new URL('./public/index.html', import.meta.url), 'text/html; charset=utf-8']],
+    ['/style.css', [new URL('./public/style.css', import.meta.url), 'text/css; charset=utf-8']],
+    ['/chat.js', [new URL('./public/chat.js', import.meta.url), 'text/javascript; charset=utf-8']],
+    ['/site.js', [new URL('./public/site.js', import.meta.url), 'text/javascript; charset=utf-8']],
+    ['/rjid.png', [new URL('./public/rjid.png', import.meta.url), 'image/png']],
+    ['/cat.svg', [new URL('./public/cat.svg', import.meta.url), 'image/svg+xml']]
 ]);
 
 function json(res, code, body) {
@@ -154,7 +155,16 @@ async function chat(req, res) {
         messages.at(-1).role !== 'user' || messages.at(-1).content.length > 1000) {
         return json(res, 400, { error: 'Invalid conversation.' });
     }
-    const html = await readFile(new URL('index.html', root), 'utf8');
+    let html;
+    try {
+        html = await readFile(new URL('./public/index.html', import.meta.url), 'utf8');
+    } catch {
+        // On Vercel the function bundle omits static files; read them back over HTTP.
+        const origin = req.headers.host ? `http://${req.headers.host}` : '';
+        const page = origin ? await fetch(`${origin}/index.html`, { signal: AbortSignal.timeout(5000) }).catch(() => null) : null;
+        if (!page || !page.ok) return json(res, 503, { error: 'Portfolio content unavailable.' });
+        html = await page.text();
+    }
     const portfolio = html.split('<div class="dashboard-container">')[1].split('<aside class="portfolio-chat"')[0]
         .replace(/<form\b[\s\S]*?<\/form>/gi, '')
         .replace(/<svg\b[\s\S]*?<\/svg>/gi, '')
@@ -189,7 +199,7 @@ const server = createServer(async (req, res) => {
         if (path === '/api/contact/status' && req.method === 'GET') return json(res, 200, { configured: contactConfigured && Boolean(contactTo) });
         const file = files.get(path);
         if (!file || !['GET', 'HEAD'].includes(req.method)) return json(res, 404, { error: 'Not found.' });
-        const content = await readFile(new URL(file[0], root));
+        const content = await readFile(file[0]);
         res.writeHead(200, { 'Content-Type': file[1], 'X-Content-Type-Options': 'nosniff' });
         res.end(req.method === 'HEAD' ? undefined : content);
     } catch {
